@@ -4,22 +4,25 @@ import "express-async-errors";
 import express from "express";
 import { connectToDb } from "./db/connectToDb.js";
 import cookieParser from "cookie-parser";
+import bodyParser from "body-parser";
 
 // middlewares
 import errorHandler from "./errors/errorHandlers.js";
 
 // routes
 import userRoutes from "./routes/userRoutes.js";
+import eventsRoutes from './routes/eventsRoutes.js'
 
 const app = express();
 
 // pre middlewares
 app.use(express.json());
-app.use(cookieParser());
-
+app.use(cookieParser(process.env.COOKIE_SECRET));
+app.use(bodyParser())
 // routes
 
 app.use("/api/v1/users", userRoutes);
+app.use("/api/v1/events", eventsRoutes);
 
 // post middlewares
 

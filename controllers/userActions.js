@@ -16,7 +16,6 @@ export const registerUser = async (req, res) => {
   res.cookie("token", token, {
     httpOnly: true,
     expires: new Date(Date.now() + oneDay),
-    secure: process.env.NODE_ENV === "production",
     signed: true,
   });
   res.status(StatusCodes.CREATED).json({ user });
@@ -52,7 +51,6 @@ export const loginUser = async (req, res) => {
   res.cookie("token", token, {
     httpOnly: true,
     expires: new Date(Date.now() + oneDay),
-    secure: process.env.NODE_ENV === "production",
     signed: true,
   });
   res.status(StatusCodes.OK).json({ user });
