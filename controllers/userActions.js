@@ -16,9 +16,15 @@ export const registerUser = async (req, res) => {
   res.cookie("token", token, {
     httpOnly: true,
     expires: new Date(Date.now() + oneDay),
+    secure: false,
     signed: true,
   });
   res.status(StatusCodes.CREATED).json({ user });
+};
+
+export const getCurrentUser = async (req, res) => {
+  const user = req.user;
+  res.status(StatusCodes.OK).json({ user });
 };
 export const loginUser = async (req, res) => {
   const { email, password } = req.body;
@@ -51,6 +57,7 @@ export const loginUser = async (req, res) => {
   res.cookie("token", token, {
     httpOnly: true,
     expires: new Date(Date.now() + oneDay),
+    secure: false,
     signed: true,
   });
   res.status(StatusCodes.OK).json({ user });

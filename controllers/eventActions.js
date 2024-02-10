@@ -1,22 +1,47 @@
-import { StatusCodes } from "http-status-codes"
+import { StatusCodes } from "http-status-codes";
+import Event from "../models/Event.js";
+import ERRORHANDLER from "../errors/errors.js";
+export const createEvent = async (req, res) => {
+  req.body.organizer = req.user._id;
+  const event = await Event.create(req.body);
+  res.status(StatusCodes.CREATED).json({ event });
+};
 
-export const createEvent = (req,res) => {
-    res.status(StatusCodes.CREATED).json({msg:"created"})
-}
+export const getEvent = async (req, res) => {
+  const eventId = req.params.id;
+  const event = await Event.findById(eventId);
+  if (!event) {
+    throw new ERRORHANDLER(`no event with id ${eventId}`);
+  }
+  res.status(StatusCodes.OK).json({ event });
+};
 
-export const getEvent = (req,res) => {
-    res.status(StatusCodes.OK).json({msg:"event"})
-}
+export const getAllEvents = async (req, res) => {
+  const events = await Event.find();
+  res.status(StatusCodes.OK).json({ events });
+};
 
-export const getAllEvents = (req,res) => {
-    res.status(StatusCodes.OK).json({msg:"all events"})
-}
+export const updateEvent = async (req, res) => {
+  const eventExist = await Event.findOne({ _id: req.body.eventId });
+  if (!eventExist) {
+    throw new ERRORHANDLER(`no event with id ${eventId}`);
+  }
+  const updatedEvent = await Event.findOneAndUpdate(
+    { _id: req.body.eventId },
+    req.body,
+    {
+      new: true,
+      runValidators: true,
+    }
+  );
+  res.status(StatusCodes.OK).json({ updatedEvent });
+};
 
-export const updateEvent = (req,res) => {
-    res.status(StatusCodes.OK).json({msg:"update event"})
-}
-
-
-export const deleteEvent = (req,res) => {
-    res.status(StatusCodes.OK).json({msg:"delete event"})
-}
+export const deleteEvent = async (req, res) => {
+  const eventExist = await Event.findOne({ _id: req.body.eventId });
+  if (!eventExist) {
+    throw new ERRORHANDLER(`no event with id ${eventId}`);
+  }
+  const deletedEvent = await Event.findOneAndDelete({ _id: req.body.eventId });
+  res.status(StatusCodes.OK).json({ deletedEvent });
+};

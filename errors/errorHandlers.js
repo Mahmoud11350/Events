@@ -11,12 +11,11 @@ const errorHandler = (err, req, res, next) => {
 
     errorStatusCode = StatusCodes.BAD_REQUEST;
   }
-  // if (err && err.name === "ValidationError") {
-  //   errorMsg = "";
-
-  //   errorStatusCode = StatusCodes.BAD_REQUEST;
-  // }
-  //   return res.json(err);
+  if (err && err.name === "CastError") {
+    errorMsg = "invalid id";
+    errorStatusCode = StatusCodes.BAD_REQUEST;
+  }
+  // return res.json(err);
   return res.status(errorStatusCode).json({
     errorMsg,
   });

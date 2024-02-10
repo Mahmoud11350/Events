@@ -1,9 +1,13 @@
-import { StatusCodes } from "http-status-codes"
+import { StatusCodes } from "http-status-codes";
+import Category from "../models/Category";
 
-export const createCategory = (req,res) => {
-    res.status(StatusCodes.CREATED).json("category created")
-}
+export const createCategory = async (req, res) => {
+  const category = await Category.create(req.body);
+  res.status(StatusCodes.CREATED).json({ category });
+};
 
-export const getAllCatigories = (req,res) => {
-    res.status(StatusCodes.OK).json("category created")
-}
+export const getAllCatigories = async (req, res) => {
+  const catigories = await Category.find();
+
+  res.status(StatusCodes.OK).json({ catigories });
+};
