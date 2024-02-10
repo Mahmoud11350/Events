@@ -38,9 +38,9 @@ const Events = () => {
           </SelectContent>
         </Select>
       </form>
-      <div className="mt-5 bg-[#FAFAFA] rounded-lg text-center min-h-[200px] flex items-center justify-center">
+      <div className="mt-5 bg-[#FAFAFA] rounded-lg text-center min-h-[200px] flex items-center justify-center bg-dottedPattern bg-cover bg-center">
         {events.length == 0 && (
-          <div>
+          <div className="">
             <h3 className="h3-medium mb-2 font-bold">No Events Found</h3>
             <p className="font-semibold">Come back later</p>
           </div>

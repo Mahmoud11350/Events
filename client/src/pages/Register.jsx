@@ -1,19 +1,29 @@
 import Logo from "@/components/navbar/Logo";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Form, Link } from "react-router-dom";
+import { Form, Link, redirect } from "react-router-dom";
 import axios from "@/lib/customFetch";
+import { toast } from "react-toastify";
+import globalAxios from "@/lib/customFetch";
 
 export const action = async ({ request }) => {
   const formData = await request.formData();
   const data = Object.fromEntries(formData);
   try {
     const user = await axios.post("/users/register", data);
-    console.log(user);
-    return null;
+    return redirect("/");
   } catch (error) {
     const errorMsg = error.response.data.errorMsg;
-    console.log(errorMsg);
+    toast.error(errorMsg);
+    return null;
+  }
+};
+
+export const loader = async () => {
+  try {
+    const { data } = await globalAxios.get("/users/current");
+    return redirect("/");
+  } catch (error) {
     return null;
   }
 };

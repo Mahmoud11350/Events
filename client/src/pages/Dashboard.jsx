@@ -2,7 +2,7 @@ import Footer from "@/components/footer/Footer";
 import Navbar from "@/components/navbar/Navbar";
 import globalAxios from "@/lib/customFetch";
 import { createContext, useContext } from "react";
-import { Outlet } from "react-router-dom";
+import { Outlet, useLoaderData } from "react-router-dom";
 
 export const loader = async () => {
   try {
@@ -14,8 +14,9 @@ export const loader = async () => {
 };
 const DashboardContext = createContext();
 const Dashboard = () => {
+  const currentUser = useLoaderData();
   return (
-    <DashboardContext.provider value={{ text: "text" }}>
+    <DashboardContext.Provider value={{ currentUser }}>
       <div className="flex flex-col min-h-screen">
         <Navbar />
         <div className="flex-1">
@@ -23,7 +24,7 @@ const Dashboard = () => {
         </div>
         <Footer />
       </div>
-    </DashboardContext.provider>
+    </DashboardContext.Provider>
   );
 };
 export default Dashboard;

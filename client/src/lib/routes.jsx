@@ -7,6 +7,9 @@ import { createBrowserRouter } from "react-router-dom";
 import { action as loginAction } from "@/pages/Login";
 import { action as registerAction } from "@/pages/Register";
 import { loader as currentUserLoader } from "@/pages/Dashboard";
+import { loader as loginLoader } from "@/pages/Login";
+import { loader as registerLoader } from "@/pages/Register";
+import { action as createEventAction } from "@/components/createEventForm/CreateEventForm";
 
 const router = createBrowserRouter([
   {
@@ -18,6 +21,7 @@ const router = createBrowserRouter([
       {
         path: "events/create",
         element: <CreateEvent />,
+        action: createEventAction,
       },
     ],
   },
@@ -25,11 +29,13 @@ const router = createBrowserRouter([
     path: "/login",
     element: <Login />,
     action: loginAction,
+    loader: loginLoader,
   },
   {
     path: "/register",
     element: <Register />,
     action: registerAction,
+    loader: registerLoader,
   },
 ]);
 

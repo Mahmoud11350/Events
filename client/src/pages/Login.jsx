@@ -4,7 +4,17 @@ import { Input } from "@/components/ui/input";
 import { Form, Link, redirect, useActionData } from "react-router-dom";
 import axios from "@/lib/customFetch";
 import { toast } from "react-toastify";
+import globalAxios from "@/lib/customFetch";
 
+export const loader = async () => {
+  try {
+    const { data } = await globalAxios.get("/users/current");
+    return redirect("/");
+    return data.user;
+  } catch (error) {
+    return null;
+  }
+};
 export const action = async ({ request }) => {
   const formData = await request.formData();
   const data = Object.fromEntries(formData);

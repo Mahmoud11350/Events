@@ -17,6 +17,9 @@ module.exports = {
       },
     },
     extend: {
+      backgroundImage: {
+        dottedPattern: "url(/src/public/assets/images/dotted-pattern.png)",
+      },
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",

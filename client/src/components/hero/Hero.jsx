@@ -3,7 +3,7 @@ import heroImg from "@/public/assets/images/hero.png";
 
 const Hero = () => {
   return (
-    <section className="bg-[#F6F8FD]">
+    <section className="bg-[#F6F8FD] bg-dottedPattern bg-cover bg-center">
       <div className="wrapper min-h-[calc(100vh-80px)] ">
         <div className="grid grid-cols-1 md:grid-cols-2 items-center gap-5 ">
           <div>
