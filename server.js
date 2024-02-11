@@ -4,6 +4,14 @@ import "express-async-errors";
 import express from "express";
 import { connectToDb } from "./db/connectToDb.js";
 import cookieParser from "cookie-parser";
+import fileUpload from "express-fileupload";
+import { v2 as cloudinary } from "cloudinary";
+
+cloudinary.config({
+  cloud_name: "fullstack-mern-developer",
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+});
 
 // middlewares
 import errorHandler from "./errors/errorHandlers.js";
@@ -17,6 +25,11 @@ const app = express();
 // pre middlewares
 app.use(express.json());
 app.use(cookieParser(process.env.COOKIE_SECRET));
+app.use(
+  fileUpload({
+    useTempFiles: true,
+  })
+);
 // routes
 
 app.use("/api/v1/users", userRoutes);

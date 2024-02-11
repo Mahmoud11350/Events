@@ -37,8 +37,8 @@ const EventSchema = new Schema(
       type: String,
     },
     category: {
-      type: Types.ObjectId,
-      ref: "Category",
+      type: String,
+      required: [true, "please provide event category"],
     },
     organizer: {
       type: Types.ObjectId,

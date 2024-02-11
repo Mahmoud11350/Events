@@ -35,7 +35,7 @@ const Navbar = () => {
         <div className="hidden md:block">
           <ul className="flex-center gap-8 font-medium">
             {links.map((link) => (
-              <li className="text-md ">
+              <li className="text-md " key={link.name}>
                 <NavLink
                   to={link.path}
                   className={({ isActive }) => isActive && "text-primary"}

@@ -1,8 +1,10 @@
 import { StatusCodes } from "http-status-codes";
 import Event from "../models/Event.js";
 import ERRORHANDLER from "../errors/errors.js";
+import { uploadImage } from "../utils/uploadImage.js";
 export const createEvent = async (req, res) => {
   req.body.organizer = req.user._id;
+  // req.body.imageUrl = uploadImage(req);
   const event = await Event.create(req.body);
   res.status(StatusCodes.CREATED).json({ event });
 };

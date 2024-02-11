@@ -36,7 +36,7 @@ const MobileNavbar = () => {
         <div className="grid gap-4 py-4">
           <ul className=" flex flex-col gap-4 font-bold">
             {links.map((link) => (
-              <li className="text-md ">
+              <li className="text-md " key={link.name}>
                 <NavLink
                   to={link.path}
                   className={({ isActive }) => isActive && "text-primary"}

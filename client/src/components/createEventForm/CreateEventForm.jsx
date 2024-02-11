@@ -1,4 +1,4 @@
-import { Form } from "react-router-dom";
+import { Form, redirect, useNavigation } from "react-router-dom";
 import {
   Select,
   SelectContent,
@@ -20,23 +20,50 @@ import { Button } from "../ui/button";
 import { useRef, useState } from "react";
 import { Checkbox } from "@/components/ui/checkbox";
 import "react-datepicker/dist/react-datepicker.css";
+import globalAxios from "@/lib/customFetch";
+import { toast } from "react-toastify";
 
 export const action = async ({ request }) => {
   const formData = await request.formData();
-  const data = Object.fromEntries(formData);
-  console.log(data);
-  return null;
+  let event = Object.fromEntries(formData);
+  event.isFree == "on" ? (event.isFree = true) : (event.isFree = false);
+  try {
+    const { data } = await globalAxios.post("/events/image-upload", formData);
+    event.imageUrl = data;
+    const CreatedEvent = await globalAxios.post("/events", event);
+    return redirect("/");
+  } catch (error) {
+    const errorMsg = error.response.data.errorMsg;
+
+    toast.error(errorMsg);
+    return null;
+  }
 };
 
 const CreateEventForm = () => {
+  const navigation = useNavigation();
   const [startDate, setStartDate] = useState(new Date());
+
+  const [pickedImage, setPickedImage] = useState();
+  const handleImageForm = (e) => {
+    const file = e.target.files[0];
+    if (!file) {
+      setPickedImage(null);
+    }
+    const fileReader = new FileReader();
+
+    fileReader.onload = () => {
+      setPickedImage(fileReader.result);
+    };
+    fileReader.readAsDataURL(file);
+  };
 
   const inputRef = useRef();
   const handleFileUpload = () => {
     inputRef.current.click();
   };
   return (
-    <Form className="wrapper" method="post">
+    <Form className="wrapper" method="post" encType="multipart/form-data">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
         <Input
           placeholder="event title"
@@ -70,25 +97,35 @@ const CreateEventForm = () => {
           className="flex-1 min-h-[200px] bg-[#FAFAFA] capitalize text-md rounded-xl"
           name="description"
         />
-        <div className="flex-1 min-h-[200px] bg-[#FAFAFA] rounded-xl flex items-center justify-center">
+        <div className="flex-1 h-[200px] bg-[#FAFAFA] rounded-xl flex items-center justify-center">
           <Input
             type="file"
-            accept="/images"
+            accept="image/*"
             id="file"
             className="hidden"
             ref={inputRef}
             name="imageUrl"
+            onChange={(e) => handleImageForm(e)}
           />
-          <div
-            className="flex-center flex-col gap-2 h-full cursor-pointer"
-            onClick={handleFileUpload}
-          >
-            <img src={imageUploader} alt="File Upload" />
-            <p>SVG,PNG,JPG</p>
-            <Button className="text-white rounded-full">
-              Select From Computer
-            </Button>
-          </div>
+
+          {pickedImage == null ? (
+            <div
+              className="flex-center flex-col gap-2 h-full cursor-pointer"
+              onClick={handleFileUpload}
+            >
+              <img src={imageUploader} alt="File Upload" />
+              <p>SVG,PNG,JPG</p>
+              <Button className="text-white rounded-full">
+                Select From Computer
+              </Button>
+            </div>
+          ) : (
+            <img
+              src={pickedImage}
+              className="w-full rounded-lg h-full"
+              onClick={handleFileUpload}
+            />
+          )}
         </div>
       </div>
       <div className="flex items-center mt-6 bg-[#FAFAFA] p-2 rounded-full">
@@ -167,8 +204,11 @@ const CreateEventForm = () => {
           />
         </div>
       </div>
-      <Button className="mt-6 text-md font-bold text-white w-full h-[50px]">
-        Creat Event
+      <Button
+        disabled={navigation.state == "submitting"}
+        className={`mt-6 text-md font-bold text-white w-full h-[50px]`}
+      >
+        {navigation.state == "submitting" ? "Creating Event" : " Creat Event"}
       </Button>
     </Form>
   );
