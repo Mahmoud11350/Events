@@ -19,6 +19,7 @@ import errorHandler from "./errors/errorHandlers.js";
 // routes
 import userRoutes from "./routes/userRoutes.js";
 import eventsRoutes from "./routes/eventsRoutes.js";
+import categoryRoutes from "./routes/categoryRoutes.js";
 
 const app = express();
 
@@ -34,6 +35,7 @@ app.use(
 
 app.use("/api/v1/users", userRoutes);
 app.use("/api/v1/events", eventsRoutes);
+app.use("/api/v1/category", categoryRoutes);
 
 // post middlewares
 

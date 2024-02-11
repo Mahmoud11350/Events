@@ -1,4 +1,4 @@
-import { Form, redirect, useNavigation } from "react-router-dom";
+import { Form, redirect, useLoaderData, useNavigation } from "react-router-dom";
 import {
   Select,
   SelectContent,
@@ -22,6 +22,17 @@ import { Checkbox } from "@/components/ui/checkbox";
 import "react-datepicker/dist/react-datepicker.css";
 import globalAxios from "@/lib/customFetch";
 import { toast } from "react-toastify";
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import { Label } from "../ui/label";
 
 export const action = async ({ request }) => {
   const formData = await request.formData();
@@ -40,11 +51,19 @@ export const action = async ({ request }) => {
   }
 };
 
+export const loader = async () => {
+  const { data } = await globalAxios.get("/category");
+  return data.catigories.map((category) => category.category) || [];
+};
+
 const CreateEventForm = () => {
+  const categories = useLoaderData();
+  console.log(categories.map((category) => category));
   const navigation = useNavigation();
   const [startDate, setStartDate] = useState(new Date());
-
   const [pickedImage, setPickedImage] = useState();
+  const [CurrentCategories, setCurrentCategories] = useState(categories);
+  const categoryRef = useRef();
   const handleImageForm = (e) => {
     const file = e.target.files[0];
     if (!file) {
@@ -62,6 +81,15 @@ const CreateEventForm = () => {
   const handleFileUpload = () => {
     inputRef.current.click();
   };
+  const handleCreateCategory = async () => {
+    const {
+      data: { category },
+    } = await globalAxios.post("/category", {
+      category: categoryRef.current.value,
+    });
+    setCurrentCategories([...CurrentCategories, category.category]);
+  };
+  console.log(CurrentCategories);
   return (
     <Form className="wrapper" method="post" encType="multipart/form-data">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
@@ -80,13 +108,41 @@ const CreateEventForm = () => {
           <SelectContent>
             <SelectGroup>
               <SelectLabel>Category</SelectLabel>
-              <SelectItem value="apple" className="font-bold">
-                Apple
-              </SelectItem>
-              <SelectItem value="banana">Banana</SelectItem>
-              <SelectItem value="blueberry">Blueberry</SelectItem>
-              <SelectItem value="grapes">Grapes</SelectItem>
-              <SelectItem value="pineapple">Pineapple</SelectItem>
+              {CurrentCategories?.map((category) => (
+                <SelectItem value={category} className="font-bold">
+                  {category}
+                </SelectItem>
+              ))}
+
+              <Dialog className="flex-center">
+                <DialogTrigger asChild>
+                  <Button variant="outline">Create New Category</Button>
+                </DialogTrigger>
+                <DialogContent className="sm:max-w-md">
+                  <DialogHeader>
+                    <DialogTitle>New Category</DialogTitle>
+                  </DialogHeader>
+                  <div className="flex items-center space-x-2">
+                    <div className="grid flex-1 gap-2">
+                      <Label htmlFor="link" className="sr-only">
+                        Link
+                      </Label>
+                      <Input defaultValue="Category" ref={categoryRef} />
+                    </div>
+                  </div>
+                  <DialogFooter className="sm:justify-start">
+                    <DialogClose asChild>
+                      <Button
+                        type="button"
+                        variant="secondary"
+                        onClick={handleCreateCategory}
+                      >
+                        Create
+                      </Button>
+                    </DialogClose>
+                  </DialogFooter>
+                </DialogContent>
+              </Dialog>
             </SelectGroup>
           </SelectContent>
         </Select>

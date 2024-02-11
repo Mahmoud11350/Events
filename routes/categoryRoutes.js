@@ -7,3 +7,5 @@ import {
 const router = Router();
 
 router.route("/").post(createCategory).get(getAllCatigories);
+
+export default router;
