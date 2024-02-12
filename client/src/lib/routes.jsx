@@ -11,6 +11,7 @@ import { loader as loginLoader } from "@/pages/Login";
 import { loader as registerLoader } from "@/pages/Register";
 import { action as createEventAction } from "@/components/createEventForm/CreateEventForm";
 import { loader as categoryLoader } from "@/components/createEventForm/CreateEventForm";
+import { loader as eventsLoader } from "@/components/events/Events";
 
 const router = createBrowserRouter([
   {
@@ -18,7 +19,7 @@ const router = createBrowserRouter([
     element: <Dashboard />,
     loader: currentUserLoader,
     children: [
-      { index: true, element: <Home /> },
+      { index: true, element: <Home />, loader: eventsLoader },
       {
         path: "events/create",
         element: <CreateEvent />,

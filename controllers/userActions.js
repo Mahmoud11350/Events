@@ -24,7 +24,10 @@ export const registerUser = async (req, res) => {
 
 export const getCurrentUser = async (req, res) => {
   const user = req.user;
-  res.status(StatusCodes.OK).json({ user });
+  const isUserExist = await User.findOne({ _id: user._id });
+  if (!isUserExist)
+    throw new ERRORHANDLER("user not found , please register first");
+  res.status(StatusCodes.OK).json({ user: isUserExist });
 };
 export const loginUser = async (req, res) => {
   const { email, password } = req.body;

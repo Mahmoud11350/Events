@@ -1,3 +1,4 @@
+import globalAxios from "@/lib/customFetch";
 import { Input } from "../ui/input";
 import {
   Select,
@@ -8,9 +9,19 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { Link, useLoaderData } from "react-router-dom";
+
+export const loader = async () => {
+  const {
+    data: { events },
+  } = await globalAxios.get("/events");
+  if (events) return events;
+  return [];
+};
 
 const Events = () => {
-  const events = [];
+  const events = useLoaderData();
+  console.log(events);
   return (
     <section className="wrapper">
       <h1 className="h2-bold">
@@ -38,14 +49,29 @@ const Events = () => {
           </SelectContent>
         </Select>
       </form>
-      <div className="mt-5 bg-[#FAFAFA] rounded-lg text-center min-h-[200px] flex items-center justify-center bg-dottedPattern bg-cover bg-center">
-        {events.length == 0 && (
+      {events.length == 0 ? (
+        <div className="mt-5 bg-[#FAFAFA] rounded-lg text-center min-h-[200px] flex items-center justify-center bg-dottedPattern bg-cover bg-center">
           <div className="">
             <h3 className="h3-medium mb-2 font-bold">No Events Found</h3>
             <p className="font-semibold">Come back later</p>
           </div>
-        )}
-      </div>
+        </div>
+      ) : (
+        <div className="grid grid-cols-1 md:grid-cols-3 mt-5 gap-5">
+          {events.map((event) => {
+            return (
+              <Link to={`event/${event._id}`}>
+                <div>
+                  <img src={event.imageUrl} alt={event.title} />
+                  <h3>{event.title}</h3>
+                  <p>{event.startDateTime}</p>
+                  <span>{event.isFree ? "Free" : event.price}</span>
+                </div>
+              </Link>
+            );
+          })}
+        </div>
+      )}
     </section>
   );
 };

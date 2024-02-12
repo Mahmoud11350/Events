@@ -1,8 +1,7 @@
 import { v2 as cloudinary } from "cloudinary";
+import fs from "fs";
 
 export const uploadImage = async (req, res) => {
-  if (!req.file) return;
-
   const result = await cloudinary.uploader.upload(
     req.files.imageUrl.tempFilePath,
     {
@@ -11,5 +10,6 @@ export const uploadImage = async (req, res) => {
       public_id: req.files.imageUrl.name,
     }
   );
+  await fs.unlinkSync(req.files.imageUrl.tempFilePath);
   return res.send(result.secure_url);
 };

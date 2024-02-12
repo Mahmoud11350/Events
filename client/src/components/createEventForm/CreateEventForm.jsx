@@ -52,13 +52,17 @@ export const action = async ({ request }) => {
 };
 
 export const loader = async () => {
-  const { data } = await globalAxios.get("/category");
-  return data.catigories.map((category) => category.category) || [];
+  try {
+    await globalAxios.get("/users/current");
+    const { data } = await globalAxios.get("/category");
+    return data.catigories.map((category) => category.category) || [];
+  } catch (error) {
+    return redirect("/");
+  }
 };
 
 const CreateEventForm = () => {
   const categories = useLoaderData();
-  console.log(categories.map((category) => category));
   const navigation = useNavigation();
   const [startDate, setStartDate] = useState(new Date());
   const [pickedImage, setPickedImage] = useState();
@@ -89,7 +93,6 @@ const CreateEventForm = () => {
     });
     setCurrentCategories([...CurrentCategories, category.category]);
   };
-  console.log(CurrentCategories);
   return (
     <Form className="wrapper" method="post" encType="multipart/form-data">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
@@ -171,7 +174,7 @@ const CreateEventForm = () => {
             >
               <img src={imageUploader} alt="File Upload" />
               <p>SVG,PNG,JPG</p>
-              <Button className="text-white rounded-full">
+              <Button className="text-white rounded-full" type="button">
                 Select From Computer
               </Button>
             </div>
