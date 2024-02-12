@@ -11,7 +11,9 @@ export const createEvent = async (req, res) => {
 
 export const getEvent = async (req, res) => {
   const eventId = req.params.id;
-  const event = await Event.findById(eventId);
+  const event = await Event.findById(eventId).populate({
+    path: "organizer",
+  });
   if (!event) {
     throw new ERRORHANDLER(`no event with id ${eventId}`);
   }
@@ -19,7 +21,9 @@ export const getEvent = async (req, res) => {
 };
 
 export const getAllEvents = async (req, res) => {
-  const events = await Event.find();
+  const events = await Event.find().populate({
+    path: "organizer",
+  });
   res.status(StatusCodes.OK).json({ events });
 };
 
