@@ -19,7 +19,7 @@ export const loader = async () => {
 const Events = () => {
   const { events } = useLoaderData();
   return (
-    <section className="wrapper">
+    <section className="wrapper" id="events">
       <h1 className="h2-bold">
         Trust by <br /> Thousands of Events
       </h1>
