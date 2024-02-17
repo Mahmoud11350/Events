@@ -6,6 +6,7 @@ import { connectToDb } from "./db/connectToDb.js";
 import cookieParser from "cookie-parser";
 import fileUpload from "express-fileupload";
 import { v2 as cloudinary } from "cloudinary";
+import cors from "cors";
 
 cloudinary.config({
   cloud_name: "fullstack-mern-developer",
@@ -31,6 +32,7 @@ app.use(
     useTempFiles: true,
   })
 );
+app.use(cors());
 // routes
 
 app.use("/api/v1/users", userRoutes);
