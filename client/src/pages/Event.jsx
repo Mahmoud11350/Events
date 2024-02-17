@@ -9,7 +9,6 @@ export const loader = async ({ request, params }) => {
     const {
       data: { event },
     } = await globalAxios.get(`/events/${params.id}`);
-    console.log(event);
     return event;
   } catch (error) {
     toast.error(error.response.data.errorMsg);

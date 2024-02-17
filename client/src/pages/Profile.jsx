@@ -58,7 +58,7 @@ const Profile = () => {
         <div className="grid grid-cols-1 md:grid-cols-3 mt-5 gap-5 wrapper">
           {events.map((event) => {
             return (
-              <Link to={`/event/${event._id}`}>
+              <Link to={`/event/${event._id}`} key={event._id}>
                 <div className="">
                   <img
                     src={event.imageUrl}

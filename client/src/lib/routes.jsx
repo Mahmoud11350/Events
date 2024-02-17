@@ -3,7 +3,7 @@ import Dashboard from "@/pages/Dashboard";
 import Home from "@/pages/Home";
 import Login from "@/pages/Login";
 import Register from "@/pages/Register";
-import Event from "@/components/event/Event";
+import Event from "@/pages/Event";
 import Profile from "@/pages/Profile";
 import { createBrowserRouter } from "react-router-dom";
 import { action as loginAction } from "@/pages/Login";
@@ -14,7 +14,7 @@ import { loader as registerLoader } from "@/pages/Register";
 import { action as createEventAction } from "@/components/createEventForm/CreateEventForm";
 import { loader as categoryLoader } from "@/components/createEventForm/CreateEventForm";
 import { loader as eventsLoader } from "@/components/events/Events";
-import { loader as eventLoader } from "@/components/event/Event";
+import { loader as eventLoader } from "@/pages/Event";
 import { loader as currentUserEvents } from "@/pages/Profile";
 
 const router = createBrowserRouter([

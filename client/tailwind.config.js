@@ -17,6 +17,9 @@ module.exports = {
       },
     },
     extend: {
+      fontFamily: {
+        jost: ["Jost", "sans-serif"],
+      },
       backgroundImage: {
         dottedPattern: "url(/src/public/assets/images/dotted-pattern.png)",
       },

@@ -112,7 +112,11 @@ const CreateEventForm = () => {
             <SelectGroup>
               <SelectLabel>Category</SelectLabel>
               {CurrentCategories?.map((category) => (
-                <SelectItem value={category} className="font-bold">
+                <SelectItem
+                  value={category}
+                  className="font-bold"
+                  key={category}
+                >
                   {category}
                 </SelectItem>
               ))}

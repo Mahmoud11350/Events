@@ -22,7 +22,25 @@ export const getEvent = async (req, res) => {
 };
 
 export const getAllEvents = async (req, res) => {
-  const events = await Event.find().populate({
+  const { search } = req.query;
+  const querObject = {};
+  if (search) {
+    querObject.$or = [
+      {
+        title: {
+          $regex: search,
+          $options: "i",
+        },
+      },
+      {
+        description: {
+          $regex: search,
+          $options: "i",
+        },
+      },
+    ];
+  }
+  const events = await Event.find(querObject).populate({
     path: "organizer",
   });
   res.status(StatusCodes.OK).json({ events });
