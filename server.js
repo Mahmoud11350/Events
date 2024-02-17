@@ -7,6 +7,9 @@ import cookieParser from "cookie-parser";
 import fileUpload from "express-fileupload";
 import { v2 as cloudinary } from "cloudinary";
 import cors from "cors";
+import path from "path";
+import { dirname } from "path";
+import { fileURLToPath } from "url";
 
 cloudinary.config({
   cloud_name: "fullstack-mern-developer",
@@ -25,6 +28,8 @@ import categoryRoutes from "./routes/categoryRoutes.js";
 const app = express();
 
 // pre middlewares
+const __dirname = dirname(fileURLToPath(import.meta.url));
+app.use(express.static(path.resolve(__dirname, "./client/dist")));
 app.use(express.json());
 app.use(cookieParser(process.env.COOKIE_SECRET));
 app.use(

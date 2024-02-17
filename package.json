@@ -10,6 +10,7 @@
     "server": "nodemon server.js",
     "client": "cd client && npm run dev",
     "dev": "concurrently --kill-others-on-fail \"npm run server\"  \"npm run client\" ",
+    "setup-production-app": "npm i && cd client && npm i && npm run build",
     "start": "node server.js"
   },
   "dependencies": {

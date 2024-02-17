@@ -3,18 +3,10 @@ import ERRORHANDLER from "../errors/errors.js";
 import { verifyToken } from "../utils/tokenLibs.js";
 
 export const authMiddleware = async (req, res, next) => {
-  // const token = req.signedCookies.token;
-  const Token = req.cookie.token;
-  throw new ERRORHANDLER(
-    `there are no token Token : ${Token}`,
-    StatusCodes.BAD_REQUEST
-  );
-  // if (!token) {
-  //   throw new ERRORHANDLER(
-  //     `there are no token Token : ${Token} & token : ${token}`,
-  //     StatusCodes.BAD_REQUEST
-  //   );
-  // }
+  const token = req.signedCookies.token;
+  if (!token) {
+    throw new ERRORHANDLER("invalid token", StatusCodes.BAD_REQUEST);
+  }
   try {
     const user = await verifyToken({ token });
     req.user = user;
