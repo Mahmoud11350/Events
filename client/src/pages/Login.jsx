@@ -34,7 +34,7 @@ const Login = () => {
   const errorMsg = useActionData();
 
   return (
-    <div className="flex items-center justify-center flex-col min-h-screen bg-dottedPattern bg-cover bg-center">
+    <div className="flex items-center justify-center flex-col min-h-screen bg-dottedPattern bg-cover bg-center bg-[#F6F8FD]">
       <div className="min-h-[400px] w-[400px] mx-auto border p-5 rounded-lg">
         <div className="flex items-center justify-center flex-col">
           <Logo />
