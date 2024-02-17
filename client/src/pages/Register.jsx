@@ -30,7 +30,7 @@ export const loader = async () => {
 
 const Register = () => {
   return (
-    <div className="flex items-center justify-center flex-col min-h-screen ">
+    <div className="flex items-center justify-center flex-col min-h-screen bg-dottedPattern bg-cover bg-center">
       <div className="min-h-[400px] w-[400px] mx-auto border px-5 py-8 rounded-lg">
         <div className="flex items-center justify-center flex-col">
           <Logo />

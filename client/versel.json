@@ -1,8 +1,0 @@
-{
-  "rewrites": [
-    {
-      "source": "/api/:path*",
-      "destination": "https://events-api-4ho5.onrender.com/:path*"
-    }
-  ]
-}
