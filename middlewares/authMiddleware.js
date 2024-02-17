@@ -5,7 +5,7 @@ import { verifyToken } from "../utils/tokenLibs.js";
 export const authMiddleware = async (req, res, next) => {
   const token = req.signedCookies.token;
   if (!token) {
-    throw new ERRORHANDLER("invalid token", StatusCodes.BAD_REQUEST);
+    throw new ERRORHANDLER("there are no token", StatusCodes.BAD_REQUEST);
   }
   try {
     const user = await verifyToken({ token });

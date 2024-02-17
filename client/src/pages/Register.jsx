@@ -31,7 +31,7 @@ export const loader = async () => {
 const Register = () => {
   return (
     <div className="flex items-center justify-center flex-col min-h-screen bg-dottedPattern bg-cover bg-center bg-[#F6F8FD]">
-      <div className="min-h-[400px] w-[400px] mx-auto border px-5 py-8 rounded-lg">
+      <div className="min-h-[400px] w-[400px] mx-auto border px-5 py-8 rounded-lg bg-white">
         <div className="flex items-center justify-center flex-col">
           <Logo />
           <h3 className="mt-4 font-medium">Welcome Back! </h3>
@@ -40,19 +40,19 @@ const Register = () => {
           <Input
             placeholder="Your Name"
             name="userName"
-            className="max-w-[400px] my-8"
+            className="max-w-[400px] my-8 text-[#F6F8FD]"
           />
           <Input
             placeholder="name@email.com"
             name="email"
-            className="max-w-[400px] my-8"
+            className="max-w-[400px] my-8 text-[#F6F8FD]"
           />
 
           <Input
             type={"password"}
             placeholder="Password"
             name="password"
-            className="mb-5"
+            className="mb-5 text-[#F6F8FD]"
           />
           <Button className="w-full text-white font-bold text-md">
             Sign Up

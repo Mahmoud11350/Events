@@ -35,7 +35,7 @@ const Login = () => {
 
   return (
     <div className="flex items-center justify-center flex-col min-h-screen bg-dottedPattern bg-cover bg-center bg-[#F6F8FD]">
-      <div className="min-h-[400px] w-[400px] mx-auto border p-5 rounded-lg">
+      <div className="min-h-[400px] w-[400px] mx-auto border p-5 rounded-lg bg-white">
         <div className="flex items-center justify-center flex-col">
           <Logo />
           <h3 className="mt-4 font-medium">Welcome Back! </h3>
@@ -45,7 +45,7 @@ const Login = () => {
             placeholder="name@email.com"
             name="email"
             id={"email"}
-            className="max-w-[400px] my-8"
+            className="max-w-[400px] my-8 text-[#F6F8FD]"
           />
 
           <Input
@@ -53,7 +53,7 @@ const Login = () => {
             placeholder="Password"
             name="password"
             id={"password"}
-            className="mb-5"
+            className="mb-5 text-[#F6F8FD]"
           />
           <Button className="w-full text-white font-bold text-md">
             Sign In
